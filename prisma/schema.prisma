@@ -1,0 +1,124 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum CollectionStatus {
+  DRAFT
+  COMING_SOON
+  ACTIVE
+  ARCHIVED
+}
+
+enum ProductAvailability {
+  COMING_SOON
+  AVAILABLE
+  SOLD_OUT
+  DISCONTINUED
+}
+
+// A release "series" / world, e.g. "Creatures of Myth".
+model Collection {
+  id            String            @id @default(cuid())
+  slug          String            @unique
+  seriesNumber  Int
+  title         String
+  eyebrow       String?
+  intro         String
+  storyNote     String?
+  status        CollectionStatus  @default(DRAFT)
+  releaseDate   DateTime?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  characters    Character[]
+  products      Product[]
+  media         MediaAsset[]
+
+  @@map("collections")
+}
+
+// A pull tier within a collection's boxes (common / rare / secret),
+// including the disclosed odds for that tier.
+model RarityTier {
+  id               String      @id @default(cuid())
+  slug             String      @unique
+  name             String
+  pullProbability  Decimal?    @db.Decimal(5, 2)
+  sortOrder        Int         @default(0)
+
+  characters       Character[]
+
+  @@map("rarity_tiers")
+}
+
+// An individual figure that can be pulled from a box in a collection.
+model Character {
+  id             String       @id @default(cuid())
+  collectionId   String
+  displayNumber  String
+  name           String
+  nature         String?
+  symbol         String?
+  lore           String?
+  rarityTierId   String?
+  sortOrder      Int          @default(0)
+  isActive       Boolean      @default(true)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  collection     Collection   @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  rarityTier     RarityTier?  @relation(fields: [rarityTierId], references: [id])
+  media          MediaAsset[]
+
+  @@index([collectionId])
+  @@map("characters")
+}
+
+// A sellable SKU within a collection (the sealed blind box, a case, etc).
+model Product {
+  id            String               @id @default(cuid())
+  collectionId  String
+  slug          String               @unique
+  name          String
+  description   String?
+  price         Decimal              @db.Decimal(10, 2)
+  currency      String               @default("USD")
+  availability  ProductAvailability  @default(COMING_SOON)
+  sortOrder     Int                  @default(0)
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+
+  collection    Collection           @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  media         MediaAsset[]
+
+  @@index([collectionId])
+  @@map("products")
+}
+
+// Image asset attached to exactly one of collection / character / product.
+model MediaAsset {
+  id            String       @id @default(cuid())
+  url           String
+  altText       String
+  caption       String?
+  sortOrder     Int          @default(0)
+  createdAt     DateTime     @default(now())
+
+  collectionId  String?
+  characterId   String?
+  productId     String?
+
+  collection    Collection?  @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  character     Character?   @relation(fields: [characterId], references: [id], onDelete: Cascade)
+  product       Product?     @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([collectionId])
+  @@index([characterId])
+  @@index([productId])
+  @@map("media_assets")
+}
