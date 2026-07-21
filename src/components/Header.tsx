@@ -5,7 +5,7 @@ import en from "@/translations/en";
 export function Header() {
   return (
     <header className="site-header">
-      <Link className="brand" href="/" aria-label={en.navigation.homeLabel}>
+      <Link className="brand" href="/#welcome" aria-label={en.navigation.homeLabel}>
         <Image
           className="brand-logo"
           src="/img/icon.png"

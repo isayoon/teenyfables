@@ -11,7 +11,7 @@ export default function Home() {
           <div className="concept-hero-art" aria-hidden="true" />
           <div className="concept-hero-copy">
             <p className="eyebrow">Lil Imps × Teeny Fables</p>
-            <h1 className="typing-title">Lil Imps</h1>
+            <h1 className="typing-title">Teeny Fables</h1>
             <FollowingEye />
             <p>Small myths are hiding in the dark.</p>
             <Link className="text-link" href="/shop">
@@ -52,11 +52,21 @@ export default function Home() {
         <section className="concept-about" id="about">
           <div className="concept-about-copy">
             <p className="eyebrow">About</p>
-            <h2>Little worlds, strange stories.</h2>
+            <h2>Tiny worlds hidden in plain sight
+                <br />Every creature has a secret</h2>
             <p>
               Teeny Fables makes small collectible worlds inspired by folklore,
               shadows, and the things you almost see in the woods.
             </p>
+          </div>
+          <div className="concept-about-character">
+            <Image
+              src="/img/creaturesofmyth/LilImps_BaseDesign_Peeking.png"
+              alt="A Lil Imp peeking into the scene"
+              width={819}
+              height={1017}
+              sizes="(max-width: 600px) 72vw, 38vw"
+            />
           </div>
         </section>
       </main>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Lacquer } from "next/font/google";
+import localFont from "next/font/local";
 import { Header } from "@/components/Header";
 import en from "@/translations/en";
 import "./globals.css";
@@ -20,6 +21,13 @@ const lacquer = Lacquer({
   weight: "400",
 });
 
+const mattB = localFont({
+  src: "../../public/fonts/MattB/MattB.otf",
+  variable: "--font-mattb",
+  display: "swap",
+  weight: "400",
+});
+
 export const metadata: Metadata = {
   title: {
     default: en.meta.title,
@@ -36,7 +44,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${lacquer.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${lacquer.variable} ${mattB.variable} antialiased`}
       >
         <Header />
         {children}

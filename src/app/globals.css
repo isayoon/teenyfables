@@ -10,14 +10,14 @@
   --paper: #f6f2ec;
   --ember: #fc688d;
   --clay: #dbb3b0;
-  --font-title: "Folk Rough OT", var(--font-lacquer), fantasy;
-  --font-subhead: var(--font-lacquer), fantasy;
-  --font-body: "Latinaires", var(--font-geist-sans), sans-serif;
 }
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
+  --font-title: var(--font-mattb), fantasy;
+  --font-subhead: var(--font-lacquer), fantasy;
+  --font-body: "Latinaires", var(--font-geist-sans), sans-serif;
   margin: 0;
   background: var(--deep);
   color: var(--paper);
@@ -95,7 +95,6 @@ button { font: inherit; }
   align-items: center;
   background: #050505;
   display: flex;
-  justify-content: center;
   min-height: 100svh;
   overflow: hidden;
   position: relative;
@@ -113,18 +112,17 @@ button { font: inherit; }
 .concept-hero-copy h1 {
   color: var(--paper);
   font-family: var(--font-title);
-  font-size: clamp(74px, 11vw, 170px);
+  font-size: clamp(58px, 9vw, 145px);
   font-weight: 400;
   letter-spacing: -.025em;
   line-height: .92;
   margin: 0;
-  text-shadow: 4px 5px 0 var(--deep), 8px 9px 0 rgba(252,104,141,.7), 0 4px 30px #000;
-  transform: rotate(-1deg);
+  text-shadow: 0 5px 0 var(--deep), 0 9px 0 rgba(252,104,141,.7), 0 4px 30px #000;
   -webkit-text-stroke: 1px var(--paper);
 }
 .typing-title {
   animation:
-    type-title 8s steps(8, end) .25s infinite,
+    type-title 8s steps(12, end) .25s infinite,
     blink-caret .65s step-end infinite;
   border-right: .045em solid var(--ember);
   box-sizing: content-box;
@@ -136,7 +134,7 @@ button { font: inherit; }
 .concept-hero-copy .typing-title { margin-left: auto; margin-right: auto; }
 @keyframes type-title {
   0%, 3% { width: 0; }
-  18%, 95% { width: 7.25ch; }
+  18%, 95% { width: 12ch; }
   96%, 100% { width: 0; }
 }
 @keyframes blink-caret {
@@ -192,10 +190,12 @@ button { font: inherit; }
   overflow: hidden;
   padding: 12vh clamp(24px, 8vw, 125px);
   position: relative;
-  text-align: center;
+  text-align: left;
 }
-.concept-about-copy { max-width: 700px; position: relative; z-index: 2; }
-.concept-about-copy > p:not(.eyebrow) { color: var(--lichen); font-size: 17px; line-height: 1.8; margin: 30px auto; max-width: 540px; }
+.concept-about-copy { max-width: min(700px, 55vw); position: relative; z-index: 2; }
+.concept-about-copy > p:not(.eyebrow) { color: var(--lichen); font-size: 17px; line-height: 1.8; margin: 30px 0; max-width: 540px; }
+.concept-about-character { bottom: 0; position: absolute; right: 0; z-index: 2; }
+.concept-about-character img { display: block; height: auto; max-height: 76vh; object-fit: contain; object-position: right bottom; width: min(42vw, 560px); }
 .inner-hero h1 {
   font-family: var(--font-title);
   font-size: clamp(64px, 7.8vw, 126px);
@@ -272,6 +272,13 @@ button { font: inherit; }
 .footer-socials svg { fill: none; height: 20px; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; width: 20px; }
 .footer-socials .social-dot { fill: currentColor; stroke: none; }
 
+@media (max-width: 1200px) {
+  .concept-about { justify-content: center; text-align: center; }
+  .concept-about-copy { max-width: 700px; width: 100%; }
+  .concept-about-copy > p:not(.eyebrow) { margin-left: auto; margin-right: auto; }
+  .concept-about-character { display: none; }
+}
+
 @media (max-width: 900px) {
   .site-header { padding: 20px 22px; }
   .concept-hero-art { background-position: 62% bottom; }
@@ -290,13 +297,17 @@ button { font: inherit; }
   .brand span { display: none; }
   .concept-hero-art { background-position: 70% bottom; opacity: .58; }
   .concept-hero-copy { padding: 0 22px; }
-  .concept-hero-copy h1 { font-size: 22vw; }
+  .concept-hero-copy h1 { font-size: 14vw; }
   .section-heading { align-items: start; flex-direction: column; gap: 12px; margin-bottom: 38px; }
   .concept-collection { padding-bottom: 10vh; padding-top: 11vh; }
   .collection-card-image { min-height: 360px; }
   .collection-card-copy { min-height: 230px; padding: 30px; }
-  .concept-about { min-height: 72vh; padding-bottom: 10vh; padding-top: 12vh; }
+  .concept-about { display: block; min-height: 72vh; padding-bottom: 0; padding-top: 12vh; text-align: center; }
+  .concept-about-copy { max-width: none; }
   .concept-about-copy > p:not(.eyebrow) { font-size: 15px; }
+  .concept-about-copy > p:not(.eyebrow) { margin-left: auto; margin-right: auto; }
+  .concept-about-character { margin-left: auto; margin-top: -20px; position: relative; width: fit-content; }
+  .concept-about-character img { max-height: 52vh; width: min(72vw, 430px); }
   .inner-hero { min-height: 78vh; padding-top: 14vh; }
   .about-story { gap: 20px; padding-bottom: 10vh; padding-top: 10vh; }
   .story-body p { font-size: 17px; }
@@ -316,5 +327,5 @@ button { font: inherit; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
-  .typing-title { border-right: 0; width: 7.25ch; }
+  .typing-title { border-right: 0; width: 12ch; }
 }
